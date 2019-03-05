@@ -1,0 +1,20 @@
+{
+  "name": "2nix",
+  "version": "0.1.0",
+  "description": "vue todo app replicated via matrix protocol",
+  "main": "App.vue",
+  "dependencies": {
+    "matrix-js-helper": "^0.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vue",
+    "matrix",
+    "kappa"
+  ],
+  "author": "flo@andlabs.eu",
+  "license": "MIT"
+}
