@@ -17,15 +17,18 @@ in a [kappa](https://kappa-architecture.com) *architecture*
 Vuejs apps have local *state*.
 Matrix is a *state* replication protocol.
 Kappa architecture (aka *event sourcing*)
-uses an *append-only log* of *change events* as the single source of truth to keep distributed data sets in sync.
+uses an *append-only log* of *change events*
+to keep distributed data sets in sync.
 
-Vue apps "chat" their *changes*
-in (multi-party end-to-end encrypted) matrix rooms
-and derive their local *state* from that event log.
-In case of network partition the matrix protocol makes sure
-that all apps *eventually* arrive at the same *consistent shared state*.
+Decoupled "apps" write data *changes*
+in (multi-party e2e encrypted) matrix rooms.
+In case of network partition the protocol makes sure
+everyone *eventually* arrives at the same *consistent* log.
+Apps derive their local *state* from that shared changelog history.
 
 ### prerequisites
 
     npm install -g @vue/cli
     npm install -g @vue/cli-service-global
+
+
