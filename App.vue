@@ -4,6 +4,10 @@
   <img v-if="state != 'matrix'"
      src="./assets/loading.gif" />
   <ul>
+    <li>
+      <input type="text" v-model="title" @keyup.enter="add"/>
+      <button class="add" @click="add">NEW</button>
+    </li>
     <transition-group name="fade" :duration="270">
     <li v-for="todo in list" :key="todo.title"
       :class="todo.status" @click="done(todo)">
@@ -15,10 +19,6 @@
       </button>
     </li>
     </transition-group>
-    <li>
-      <input type="text" v-model="title" @keyup.enter="add"/>
-      <button class="add" @click="add">NEW</button>
-    </li>
   </ul>
 </div>
 </template>
@@ -39,7 +39,8 @@ export default {
     list () {
       return Object.values(this.todos)
       .filter(t => t.show && t.title)
-      .sort((a, b) => a.created > b.created)
+      .sort((a, b) => b.updated - a.updated)
+      .sort((a, b) => b.status.localeCompare(a.status))
     }
   },
   methods: {
@@ -47,7 +48,9 @@ export default {
       if (this.title.length === 0) return
       const todo = {
         title: this.title, status: 'todo',
-        show: 0, sync: 1, created: Date.now()
+        show: 0, sync: 1,
+        created: Date.now(),
+        updated: Date.now()
       }
       this.$set(this.todos, todo.title, todo)
       this.$nextTick(() => {
@@ -62,13 +65,14 @@ export default {
       } else {
         todo.status = 'todo'
       }
-      this.send(todo)
+      todo.updated = Date.now()
+      this.send({...todo})
     },
     remove (todo) {
       todo.status = 'done'
       this.$nextTick(() => {
         todo.show = false
-        this.send(todo)
+        this.send({...todo})
       })
     }
   },
